@@ -61,7 +61,6 @@ export default function WorkingWithArrays(app) {
       res.status(404).json({ message: `Unable to update Todo with ID ${id}` });
       return;
     }
-
     const todo = todos.find((t) => t.id === parseInt(id));
     todo.title = title;
     res.json(todos);
