@@ -4,5 +4,19 @@ export default function EnrollmentsDao(db) {
     const { enrollments } = db;
     enrollments.push({ _id: uuidv4(), user: userId, course: courseId });
   }
-  return { enrollUserInCourse };
+
+  function unenrollUserFromCourse(userId, courseId) {
+    const { enrollments } = db;
+    const index = enrollments.findIndex(
+      (e) => e.user === userId && e.course === courseId
+    );
+    if (index !== -1) {
+      enrollments.splice(index, 1);
+    }
+  }
+
+  return {
+    enrollUserInCourse,
+    unenrollUserFromCourse,
+  };
 }
