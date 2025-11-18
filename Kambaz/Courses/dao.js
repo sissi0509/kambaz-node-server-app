@@ -34,11 +34,18 @@ export default function CoursesDao(db) {
     return course;
   }
 
+  function findCourseById(courseId) {
+    const { courses } = db;
+    const course = courses.find((course) => course._id === courseId);
+    return course;
+  }
+
   return {
     findAllCourses,
     findCoursesForEnrolledUser,
     createCourse,
     deleteCourse,
     updateCourse,
+    findCourseById,
   };
 }

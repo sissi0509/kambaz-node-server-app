@@ -69,9 +69,15 @@ export default function CourseRoutes(app, db) {
     const status = dao.updateCourse(courseId, courseUpdates);
     res.send(status);
   };
+  const findCourseById = (req, res) => {
+    const { courseId } = req.params;
+    const course = dao.findCourseById(courseId);
+    res.json(course);
+  };
   app.put("/api/courses/:courseId", updateCourse);
   app.delete("/api/courses/:courseId", deleteCourse);
   app.get("/api/users/:userId/courses", findCoursesForEnrolledUser);
+  app.get("/api/courses/:courseId", findCourseById);
   app.get("/api/courses", findAllCourses);
   app.post("/api/users/current/courses", createCourse);
   app.post("/api/users/enrollments/:courseId", enrollInCourse);
