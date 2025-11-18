@@ -26,15 +26,6 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: false,
 };
-if (process.env.SERVER_ENV !== "development") {
-  sessionOptions.proxy = true;
-  sessionOptions.cookie = {
-    sameSite: "none",
-    secure: true,
-    domain: process.env.SERVER_URL,
-  };
-}
-
 // if (process.env.SERVER_ENV !== "development") {
 //   sessionOptions.proxy = true;
 //   sessionOptions.cookie = {
@@ -42,13 +33,22 @@ if (process.env.SERVER_ENV !== "development") {
 //     secure: true,
 //     // domain: process.env.SERVER_URL,
 //   };
-// } else {
-//   // local development: http://localhost:4000
-//   sessionOptions.cookie = {
-//     sameSite: "lax",
-//     secure: false,
-//   };
 // }
+
+if (process.env.SERVER_ENV !== "development") {
+  sessionOptions.proxy = true;
+  sessionOptions.cookie = {
+    sameSite: "none",
+    secure: true,
+    // domain: process.env.SERVER_URL,
+  };
+} else {
+  // local development: http://localhost:4000
+  sessionOptions.cookie = {
+    sameSite: "lax",
+    secure: false,
+  };
+}
 
 app.use(session(sessionOptions));
 
