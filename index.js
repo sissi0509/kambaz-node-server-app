@@ -50,9 +50,7 @@ if (process.env.SERVER_ENV !== "development") {
 }
 
 app.use(session(sessionOptions));
-
 app.use(express.json());
-
 UserRoutes(app, db);
 CourseRoutes(app, db);
 ModulesRoutes(app, db);
