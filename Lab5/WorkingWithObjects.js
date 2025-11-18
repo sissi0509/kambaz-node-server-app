@@ -47,8 +47,13 @@ export default function WorkingWithObjects(app) {
     module.name = newName;
     res.json(module);
   };
+  const setModuleDescription = (req, res) => {
+    const { newDescription } = req.params;
+    module.description = newDescription;
+    res.json(module);
+  };
   app.get("/lab5/module/name/:newName", setModuleName);
-
+  app.get("/lab5/module/description/:newDescription", setModuleDescription);
   app.get("/lab5/module/name", getModuleName);
   app.get("/lab5/module", getModule);
   app.get("/lab5/assignment/title/:newTitle", setAssignmentTitle);
