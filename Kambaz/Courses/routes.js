@@ -5,9 +5,16 @@ export default function CourseRoutes(app, db) {
   const enrollmentsDao = EnrollmentsDao(db);
   const createCourse = (req, res) => {
     const currentUser = req.session["currentUser"];
+    if (!currentUser) {
+      res.sendStatus(401);
+      return;
+    }
     const newCourse = dao.createCourse(req.body);
-    enrollmentsDao.enrollUserInCourse(currentUser._id, newCourse._id);
-    res.json(newCourse);
+    const newEnrollment = enrollmentsDao.enrollUserInCourse(
+      currentUser._id,
+      newCourse._id
+    );
+    res.json({ course: newCourse, enrollment: newEnrollment });
   };
   const enrollInCourse = (req, res) => {
     const currentUser = req.session["currentUser"];
@@ -16,8 +23,11 @@ export default function CourseRoutes(app, db) {
       return;
     }
     const { courseId } = req.params;
-    enrollmentsDao.enrollUserInCourse(currentUser._id, courseId);
-    res.sendStatus(200);
+    const enrollment = enrollmentsDao.enrollUserInCourse(
+      currentUser._id,
+      courseId
+    );
+    res.json(enrollment);
   };
 
   const unenrollFromCourse = (req, res) => {
