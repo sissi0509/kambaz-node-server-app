@@ -20,11 +20,11 @@ app.use(
   })
 );
 
-// const sessionOptions = {
-//   secret: process.env.SESSION_SECRET || "kambaz",
-//   resave: false,
-//   saveUninitialized: false,
-// };
+const sessionOptions = {
+  secret: process.env.SESSION_SECRET || "kambaz",
+  resave: false,
+  saveUninitialized: false,
+};
 // if (process.env.SERVER_ENV !== "development") {
 //   sessionOptions.proxy = true;
 //   sessionOptions.cookie = {
