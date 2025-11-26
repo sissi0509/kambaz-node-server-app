@@ -1,4 +1,5 @@
 import UsersDao from "./dao.js";
+import model from "./model.js";
 
 export default function UserRoutes(app) {
   const dao = UsersDao();
@@ -91,9 +92,10 @@ export default function UserRoutes(app) {
   app.post("/api/users/signin", signin);
   app.post("/api/users/signout", signout);
   app.post("/api/users/profile", profile);
+
   app.get("/api/test-db", async (req, res) => {
     try {
-      const count = await UsersModel.countDocuments();
+      const count = await model.countDocuments();
       res.json({ ok: true, userCount: count });
     } catch (e) {
       console.error("Test DB error:", e);
