@@ -1,11 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
-export default function CoursesDao(db) {
+import model from "./model.js";
+export default function CoursesDao() {
   function findAllCourses() {
-    return db.courses;
+    return model.find();
   }
 
-  function findCoursesForEnrolledUser(userId) {
-    const { courses, enrollments } = db;
+  async function findCoursesForEnrolledUser(userId) {
+    const { enrollments } = db;
+    const courses = await model.find();
     const enrolledCourses = courses.filter((course) =>
       enrollments.some(
         (enrollment) =>
