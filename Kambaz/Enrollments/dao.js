@@ -29,7 +29,9 @@ export default function EnrollmentsDao() {
 
   async function findCoursesForUser(userId) {
     const enrollments = await model.find({ user: userId }).populate("course");
-    return enrollments.map((enrollment) => enrollment.course);
+    return enrollments
+      .map((enrollment) => enrollment.course)
+      .filter((c) => c !== null);
   }
   async function findUsersForCourse(courseId) {
     const enrollments = await model.find({ course: courseId }).populate("user");
@@ -38,17 +40,17 @@ export default function EnrollmentsDao() {
       .filter((u) => u !== null);
   }
 
-  function enrollUserInCourse(userId, courseId) {
+  async function enrollUserInCourse(userId, courseId) {
     return model.create({
       user: userId,
       course: courseId,
       _id: `${userId}-${courseId}`,
     });
   }
-  function unenrollUserFromCourse(user, course) {
+  async function unenrollUserFromCourse(user, course) {
     return model.deleteOne({ user, course });
   }
-  function unenrollAllUsersFromCourse(courseId) {
+  async function unenrollAllUsersFromCourse(courseId) {
     return model.deleteMany({ course: courseId });
   }
 
